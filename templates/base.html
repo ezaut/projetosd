@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand navbar-dark bg-dark mb-3">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'aluguel:index' %}">
+                    <h1>Livraria</h1>
+                </a>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_logout' %}">Sair</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_login' %}">Entrar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_signup' %}">Cadastro</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                {% block sidebar %}
+                <ul class="sidebar-nav">
+                    <li><a href="{% url 'aluguel:listar_livros' %}">Todos Livros</a></li>
+                    <li><a href="{% url 'aluguel:listar_autores' %}">Todos Autores</a></li>
+                </ul>
+
+                <ul class="sidebar-nav">
+                    {% if user.is_authenticated %}
+                    <li>Olá Sr.(a): {{ user.get_username }}</li>
+                    <li><a href="{% url 'aluguel:meus_livros' %}">Meus Alugados</a></li>
+                    {% else %}
+                    <li>Se ainda não é cadastrado <a href="{% url 'account_signup' %}">clique aqui!</a></li>
+                    {% endif %}
+                </ul>
+
+                {% if user.is_staff %}
+                <hr />
+                <ul class="sidebar-nav">
+                    <li>Admim</li>
+                    {% if perms.aluguel.can_mark_returned %}
+                    <li><a href="{% url 'aluguel:alugados' %}">Todos Alugados</a></li>
+                    <li><a href="{% url 'aluguel:livro_create' %}">Adicionar Livros</a></li>
+                    <li><a href="{% url 'aluguel:autor_create' %}">Adicionar Autor</a></li>
+                    {% endif %}
+                    
+                </ul>
+                {% endif %}
+
+                {% endblock %}
+            </div>
+            <div class="col-sm-10 ">
+                {% block content %}{% endblock %}
+
+                {% block pagination %}
+                {% if is_paginated %}
+                <div class="pagination">
+                    <span class="page-links">
+                        {% if page_obj.has_previous %}
+                        <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+                        <span class="page-current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+                        {% if page_obj.has_next %}
+                        <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                        {% endif %}
+                    </span>
+                </div>
+                {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+
+    <main class="container">
+
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

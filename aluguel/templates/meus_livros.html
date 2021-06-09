@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="table table-striped">
+  <tr>
+    <th>PK</th>
+    <th>Titulo</th>
+    <th>Autor</th>
+    <th>Genero</th>
+    <th>Ano</th>
+  </tr>
+
+  <h2>Lista de Livros</h2>
+
+
+<ul>
+{% for livro in livros %}
+    <li> {{ livro.titulo }} - {{livro.autor}} -{{livro.genero}} - {{livro.ano}} </li>
+{% endfor %}
+</ul>
+
+</table>
+{% endblock %}

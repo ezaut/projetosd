@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="table table-striped">
+  <tr>
+    <th>PK</th>
+    <th>Nome</th>
+    <th>Sobrenome</th>
+    <th>Data de Nascimento</th>
+    <th>Data de Falecimento</th>
+  </tr>
+
+  <h2>Lista de Autores</h2>
+
+
+<ul>
+{% for autor in autores %}
+    <li> {{autor.nome}} - {{autor.sobrenome}} - {{autor.data_nasc}} - {{autor.data_falec}} </li>
+{% endfor %}
+</ul>
+
+</table>
+{% endblock %}
