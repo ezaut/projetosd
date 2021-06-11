@@ -33,7 +33,7 @@ urlpatterns = [
 
 urlpatterns += [
     path('meus_livros/', views.meusListView, name='meus_livros'),
-    path(r'alugados/', views.alugadosList, name='alugados'), 
+    path('alugados/', views.alugadosList, name='alugados'), 
 ]
 
 

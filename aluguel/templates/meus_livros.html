@@ -1,22 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-<table class="table table-striped">
-  <tr>
-    <th>PK</th>
-    <th>Titulo</th>
-    <th>Autor</th>
-    <th>Genero</th>
-    <th>Ano</th>
-  </tr>
 
-  <h2>Lista de Livros</h2>
+<h1>Meus Livros</h1>
 
-
+{% if meusListView %}
 <ul>
-{% for livro in livros %}
-    <li> {{ livro.titulo }} - {{livro.autor}} -{{livro.genero}} - {{livro.ano}} </li>
-{% endfor %}
+
+  {% for bookinst in meusListView %} 
+  <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
+    <a href="{% url 'meus_livros' bookinst.livro.pk %}">{{bookinst.livro.titulo}}</a> ({{ bookinst.devolucao }})        
+  </li>
+  {% endfor %}
 </ul>
 
-</table>
+{% else %}
+  <p>Não há livros emprestados.</p>
+{% endif %}  
 {% endblock %}

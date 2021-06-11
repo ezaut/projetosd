@@ -14,7 +14,8 @@ class InstanciaLivroInline(admin.TabularInline):
 
 @admin.register(Livro)
 class LivroAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'autor', 'isbn')
+    list_display = ('titulo', 'autor', 'get_genero', 'linguagem', 'edicao', 'quantidade', 'ano')
+    list_filter = ('titulo', 'autor')
     inlines = [InstanciaLivroInline]
 
 @admin.register(Autor)
@@ -30,7 +31,7 @@ class InstanciaLivroAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('livro', 'edicao', 'id')
+            'fields': ('livro', 'id')
         }),
         ('Availability', {
             'fields': ('status', 'devolucao', 'cliente')

@@ -1,21 +1,34 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>Lista de Autores</h2>
-<table class="table table-striped">
+
+<h1>Lista de Autores</h1>
+
+{% if autorList %}
+
+<table class="table">
+
+  <tr>
+    <th scope="col">Nome</th>
+    <th scope="col">Sobrenome</th>
+    <th scope="col">Data de Nascimento</th>
+    <th scope="col">Data de Falecimento</th>
+  </tr>
+
   <ul>
     {% for autor in autores %}
-    <li> {{autor.nome}} - {{autor.sobrenome}} - {{autor.data_nasc}} - {{autor.data_falec}} </li>
+    <li> 
+      <a href="{{ autor.get_absolute_url }}">
+        {{autor}} ({{ autor.data_nasc }}
+        - {% if autor.data_falec %}{{autor.data_falec}}{% endif %})
+      </a>
+    </li>
     {% endfor %}
   </ul>
 
-  <tr>
-    <th>Nome</th>
-    <th>Sobrenome</th>
-    <th>Data de Nascimento</th>
-    <th>Data de Falecimento</th>
-  </tr>
-
-  
-
 </table>
+{% else %}
+<p>Não há autores disponíveis.</p>
+{% endif %}
+
 {% endblock %}

@@ -1,14 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Livraria - SAL</h1>
-  <p>Bem-vindo a sua livraria, desenvolvivo no curso de <em>Sistemas Distribuídos com Jairson</em>!</p>
-  <h2>Conteúdo</h2>
-  <p>A livraria possui os seguintes números:</p>
-  <ul>
-    <li><strong>Livros:</strong> {{ num_livros }}</li>
-    <li><strong>Cópias:</strong> {{ num_instancias }}</li>
-    <li><strong>Cópias Disponíveis:</strong> {{ num_instancias_disponiveis }}</li>
-    <li><strong>Livros Disponíveis:</strong> {{ listar_livros }}</li>
-  </ul>
+
+<h1>Autor: {{ autor }} </h1>
+<p>{{autor.data_nasc}} - {% if autor.data_falec %}{{author.data_falec}}{% endif %}</p>
+
+<div style="margin-left:20px;margin-top:20px">
+<h4>Livros</h4>
+
+<dl>
+{% for livro in autor.livro %}
+  <dt><a href="{% url 'livro_detalhe' livro.pk %}">{{livro}}</a>
+     ({{livro.instancialivro.all.count}})</dt>
+  <dd>{{livro.descricao}}</dd>
+{% endfor %}
+</dl>
+
+</div>
 {% endblock %}

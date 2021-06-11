@@ -1,15 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Livraria - SAL</h1>
-  <p>Bem-vindo a sua livraria, desenvolvivo no curso de <em>Sistemas Distribuídos com Jairson</em>!</p>
-  <h2>Conteúdo</h2>
-  <p>A livraria possui os seguintes números:</p>
-  <ul>
-    <li><strong>Livros:</strong> {{ num_livros }}</li>
-    <li><strong>Cópias:</strong> {{ num_instancias }}</li>
-    <li><strong>Cópias Disponíveis:</strong> {{ num_instancias_disponiveis }}</li>
-    <li><strong>Número de autores:</strong> {{ num_autores }}</li>
-    <li><strong>Número de visitas:</strong> {{ num_visitas }}</li>
-  </ul>
+
+<h1>Titulo: {{ livro.titulo }}</h1>
+
+<p><strong>Autor:</strong> <a href="{{ livro.autor.get_absolute_url }}">{{ livro.autor }}</a></p>
+<p><strong>Descrição:</strong> {{ livro.descricao }}</p>
+<p><strong>ISBN:</strong> {{ livro.isbn }}</p>
+<p><strong>Linguagem:</strong> {{ livro.linguagem }}</p>
+<p><strong>Genero:</strong> {{ livro.genero.all|join:", " }}</p>
+
+<div style="margin-left:20px;margin-top:20px">
+    <h4>Copias</h4>
+
+    {% for copias in livro.instancialivro.all %}
+    <hr>
+    <p
+        class="{% if copias.status == 'd' %}text-success{% elif copias.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
+        {{ copias.get_status_display }}</p>
+    {% if copias.status != 'a' %}<p><strong>Devolução:</strong> {{copias.devolucao}}</p>{% endif %}
+    <p><strong>Edição:</strong> {{copias.edicao}}</p>
+    <p class="text-muted"><strong>Id:</strong> {{copias.id}}</p>
+
+    {% endfor %}
+</div>
 {% endblock %}

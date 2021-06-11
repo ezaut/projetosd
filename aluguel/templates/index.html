@@ -1,13 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <p>Bem-vindo a sua livraria, desenvolvivo no curso de <em>Sistemas Distribuídos com Jairson</em>!</p>
-  <h2>Conteúdo</h2>
-  <p>A livraria possui os seguintes números:</p>
-  <ul>
-    <li><strong>Livros:</strong> {{ num_livros }}</li>
-    <li><strong>Cópias:</strong> {{ num_instancias }}</li>
-    <li><strong>Cópias Disponíveis:</strong> {{ num_instancias_disponiveis }}</li>
-    <li><strong>Livros Disponíveis:</strong> {{ listar_livros }}</li>
-  </ul>
+<p>Bem-vindo a sua livraria, desenvolvivo no curso de <em>Sistemas Distribuídos com Jairson</em>!</p>
+<h2>Conteúdo</h2>
+<p>A livraria possui os seguintes números:</p>
+{% if user.is_superuser %}
+<ul>
+  <li><strong>Total de Livros:</strong> {{ num_livros }}</li>
+  <li><strong>Cópias disponíveis:</strong> {{ num_instancias_disponiveis }}</li>
+  <li><strong>Em manutenção:</strong> {{ num_manutencao }}</li>
+  <li><strong>Em alugados:</strong> {{ num_alugados }}</li>
+  <li><strong>Reservados:</strong> {{ num_reservados }}</li>
+  <li><strong>Total de Autores:</strong> {{ num_autores }}</li>
+</ul>
+{% else %}
+<ul>
+  <li><strong>Total de Livros:</strong> {{ num_livros }}</li>
+  <li><strong>Total de Autores:</strong> {{ num_autores }}</li>
+</ul>
+{% endif %}
+
+<p>Você visitou esta página {{ num_visitas }} vezes{{ num_visitas|pluralize }}.</p>
 {% endblock %}

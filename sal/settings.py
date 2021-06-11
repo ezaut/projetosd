@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +27,7 @@ SECRET_KEY = 'n23_14$ls%6b@h$__+0i6)p*#&329!4zwqpzblfyp#f==l7354'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.100.10']
+ALLOWED_HOSTS = ['192.168.100.10', '127.0.0.1']
 
 
 # Application definition
@@ -46,8 +47,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'crispy_forms',
-    'cpf_field',
-    'easy_mask',
 ]
 
 MIDDLEWARE = [
@@ -154,3 +153,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 # django-crispy-forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Comando para corrigir as tabelas no banco de dados
+#python manage.py migrate --run-syncdb

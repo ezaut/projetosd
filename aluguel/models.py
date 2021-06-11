@@ -6,20 +6,20 @@ import uuid
 
 # Create your models here.
 class Genero(models.Model):
-    nome = models.CharField(
+    genero = models.CharField(
         max_length=200,
         help_text="Insira o gênero ( Ficção Científica, Drama, Policial e etc.)"
         )
           
     def __str__(self):
-        return self.nome
+        return self.genero
 
 class Autor(models.Model):
       
     nome = models.CharField(max_length=100)
     sobrenome = models.CharField(max_length=100)
-    data_nasc = models.DateTimeField(null=True, blank=True)
-    data_falec = models.DateTimeField('Faleceu em:', null=True, blank=True)
+    data_nasc = models.DateField(null=True, blank=True)
+    data_falec = models.DateField('Faleceu em:', null=True, blank=True)
 
     class Meta:
         ordering = ['sobrenome', 'nome']
@@ -39,21 +39,25 @@ class Livro(models.Model):
                             unique=True,
                             help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn'
                                       '">ISBN number</a>')
+  edicao = models.CharField(max_length=200)
   quantidade = models.IntegerField()
   genero = models.ManyToManyField('Genero')
   linguagem = models.CharField(max_length=30)
   ano = models.IntegerField()
+  descricao = models.TextField()
   
-  def get_genero(self):
-        return "\n".join([p.generos for p in self.genero.all()])
-
-  # Metadados
+    # Metadados
   class Meta:
-      ordering = ['-titulo', 'autor', 'ano']
+      ordering = ['-titulo', 'autor']
+
+  def get_genero(self):
+        return ', '.join([genero.genero for genero in self.genero.all()])
+
+  get_genero.short_description = 'Genero'
 
    # Métodos
-  #def get_absolute_url(self):
-  #    return reverse('livro_detalhe', args=[str(self.id)])
+  def get_absolute_url(self):
+      return reverse('livro_detalhe', args=[str(self.id)])
 
   def __str__(self):
       return self.titulo
@@ -64,7 +68,6 @@ class Livro(models.Model):
 class InstanciaLivro(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4)
   livro = models.ForeignKey('Livro', on_delete = models.SET_NULL, null = True)
-  edicao = models.CharField(max_length=200)
   devolucao = models.DateField(null=True, blank=True)
   cliente = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
   
@@ -88,6 +91,9 @@ class InstanciaLivro(models.Model):
     default = 'm',
     help_text = 'Disponibilidade do livro',
   )
+
+  def get_queryset(self):
+        return InstanciaLivro.objects.filter(cliente=self.request.user).filter(status__exact='e').order_by('devolucao')
 
   class Meta:
         ordering = ['devolucao']
