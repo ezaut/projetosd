@@ -9,9 +9,9 @@
 <h4>Livros</h4>
 
 <dl>
-{% for livro in autor.livro %}
+{% for livro in autor.livro_set.all %}
   <dt><a href="{% url 'livro_detalhe' livro.pk %}">{{livro}}</a>
-     ({{livro.instancialivro.all.count}})</dt>
+     ({{livro.instancialivro_set.all.count}})</dt>
   <dd>{{livro.descricao}}</dd>
 {% endfor %}
 </dl>

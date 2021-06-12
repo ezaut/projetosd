@@ -15,7 +15,7 @@ Including another URLconf
     """
 from django.urls import path
 from . import views
-from .views import (autorDelete, autorList, autor_novo, autorcreate, 
+from .views import (autorDelete, autorList, autor_novo, autorcreate, autorDetalhe,
                     index, livroCreate, livroDelete, 
                     livroDetalhe, livroList, livroUpdate, autorDelete, autorUpdate, 
                     meusListView, alugadosList)
@@ -27,7 +27,7 @@ urlpatterns = [
     path('livros/', views.livroList, name='listar_livros'),
     path('livro/<int:pk>', views.livroDetalhe, name='livro_detalhe'),
     path('autores/', autorList, name='listar_autores'),
-    #path('autor/<int:pk>', AuthorDetailView.as_view(), name='autor-detalhe'),
+    path('autor/<int:pk>', views.autorDetalhe, name='autor_detalhe'),
 ]
 
 

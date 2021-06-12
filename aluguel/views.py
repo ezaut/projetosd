@@ -38,7 +38,6 @@ def index(request):
 
 def autorList(request):
   autores = Autor.objects.all()
-  paginate_by = 10
   return render(request, 'listar_autores.html', {'autores': autores})
 
 def autorcreate(request):
@@ -60,9 +59,12 @@ def autorUpdate(request):
 def autorDelete(request):
   pass
 
+def autorDetalhe(request):
+  autores = Autor.objects.all()
+  return render(request, 'autor_detalhe.html', {'autores': autores})
+
 def livroList(request):
   livros = InstanciaLivro.objects.filter(status__exact='d')
-  paginate_by = 10
   return render(request, 'listar_livros.html', {'livros': livros})
 
 def livroCreate(request):
@@ -80,15 +82,14 @@ def livroDelete(request):
   pass
 
 def livroDetalhe(request):
-  pass
+  livros = InstanciaLivro.objects.all()
+  return render(request, 'livro_detalhe.html', {'livros': livros})
 
 def alugadosList(request):
-  instancialivros = InstanciaLivro.objects.filter(status__exact='e')
-  paginate_by = 10
+  instancialivros = InstanciaLivro.objects.filter(status__exact='e').order_by('devolucao')
   return render(request, 'alugados.html', {'instancialivros': instancialivros})
 
 
 def meusListView(request):
   meuslivros = InstanciaLivro.objects.filter(status__exact='e').filter(cliente=request.user.id)
-  paginate_by = 10
   return render(request, 'meus_livros.html', {'meuslivros': meuslivros})

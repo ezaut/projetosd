@@ -1,3 +1,4 @@
+from datetime import date
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.fields import DateField
@@ -75,7 +76,7 @@ class InstanciaLivro(models.Model):
 
   @property
   def is_overdue(self):
-      if self.devolucao and DateField.today() > self.devolucao:
+      if self.devolucao and date.today() > self.devolucao:
           return True
       return False
 
