@@ -1,4 +1,3 @@
-from typing import ContextManager
 from .models import Autor, Livro, InstanciaLivro
 from django.shortcuts import redirect, render
 from .form import AutorForm, LivroForm
@@ -62,7 +61,7 @@ def autorDelete(request):
   pass
 
 def livroList(request):
-  livros = Livro.objects.all()
+  livros = InstanciaLivro.objects.filter(status__exact='d')
   paginate_by = 10
   return render(request, 'listar_livros.html', {'livros': livros})
 
@@ -84,12 +83,12 @@ def livroDetalhe(request):
   pass
 
 def alugadosList(request):
-  livros = Livro.objects.all()
+  instancialivros = InstanciaLivro.objects.filter(status__exact='e')
   paginate_by = 10
-  return render(request, 'alugados.html', {'livros': livros})
+  return render(request, 'alugados.html', {'instancialivros': instancialivros})
 
 
 def meusListView(request):
-  meuslivros = InstanciaLivro.objects.all()
+  meuslivros = InstanciaLivro.objects.filter(status__exact='e').filter(cliente=request.user.id)
   paginate_by = 10
   return render(request, 'meus_livros.html', {'meuslivros': meuslivros})

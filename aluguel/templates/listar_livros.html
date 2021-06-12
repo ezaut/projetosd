@@ -2,15 +2,27 @@
 {% block content %}
 
 <h1>Lista de Livros</h1>
-{% if livroList %}
-<ul>
+<table class="table table-striped">
+
+  <tr style="background-color: gray;">
+    <th style="text-align: center;">Titulo</th>
+    <th style="text-align: center;">Autor</th>
+    <th style="text-align: center;">Genero</th>
+    <th style="text-align: center;">Ano</th>
+
+  </tr>
+
+  {% if livros %}
   {% for livro in livros %}
-  <li>
-    <a href="{{ livro.get_absolute_url }}">{{ livro.titulo }}</a> ({{livro.autor}})
-  </li>
+  <td>
+    <tr>
+      <td style="text-align: center;">{{livro.livro.titulo}}</td>
+      <td style="text-align: center;">{{livro.livro.autor}}</td>
+      <td style="text-align: center;">{{livro.livro.genero.all|join:", "}}</td>
+      <td style="text-align: center;">{{livro.livro.ano}}</td>
+    </tr>
+  </td>
   {% endfor %}
-</ul>
-{% else %}
-<p>Não há livros na biblioteca.</p>
-{% endif %}
+  {% endif %}
+</table>
 {% endblock %}

@@ -9,6 +9,7 @@
 <table class="table table-striped">
 
   <tr style="background-color: gray;">
+    <th style="text-align: center;">Cliente</th>
     <th style="text-align: center;">Titulo</th>
     <th style="text-align: center;">Autor</th>
     <th style="text-align: center;">Genero</th>
@@ -16,14 +17,14 @@
 
   </tr>
 
-  {% for livro in livros %}
+  {% for livro in instancialivros %}
   <td>
     <tr>
-
-      <td style="text-align: center;">{{livro.titulo}}</td>
-      <td style="text-align: center;">{{livro.autor}}</td>
-      <td style="text-align: center;">{{livro.genero.all|join:", "}}</td>
-      <td style="text-align: center;">{{livro.ano}}</td>
+      <td style="text-align: center;">{{livro.cliente.username}}</td>
+      <td style="text-align: center;">{{livro.livro.titulo}}</td>
+      <td style="text-align: center;">{{livro.livro.autor}}</td>
+      <td style="text-align: center;">{{livro.livro.genero.all|join:", "}}</td>
+      <td style="text-align: center;">{{livro.livro.ano}}</td>
 
     </tr>
   </td>

@@ -71,6 +71,8 @@ class InstanciaLivro(models.Model):
   devolucao = models.DateField(null=True, blank=True)
   cliente = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
   
+  
+
   @property
   def is_overdue(self):
       if self.devolucao and DateField.today() > self.devolucao:
@@ -93,8 +95,8 @@ class InstanciaLivro(models.Model):
   )
 
   def get_queryset(self):
-        return InstanciaLivro.objects.filter(cliente=self.request.user).filter(status__exact='e').order_by('devolucao')
-
+        return InstanciaLivro.objects.filter(cliente=self.request.username).filter(status__exact='e').order_by('devolucao')
+  
   class Meta:
         ordering = ['devolucao']
         permissions = (("can_mark_returned", "Set book as returned"),)

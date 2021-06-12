@@ -1,19 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Meus Livros</h1>
+<h2 style="text-align: center;">Meus livros alugados</h2>
 
-{% if meusListView %}
-<ul>
+<table class="table table-striped">
 
-  {% for bookinst in meusListView %} 
-  <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
-    <a href="{% url 'meus_livros' bookinst.livro.pk %}">{{bookinst.livro.titulo}}</a> ({{ bookinst.devolucao }})        
-  </li>
+  <tr style="background-color: gray;">
+    <th style="text-align: center;">Cliente</th>
+    <th style="text-align: center;">Titulo</th>
+    <th style="text-align: center;">Autor</th>
+    <th style="text-align: center;">Genero</th>
+    <th style="text-align: center;">Ano</th>
+
+  </tr>
+
+  {% if meuslivros %}
+  {% for livro in meuslivros %}
+  <td>
+    <tr>
+      <td style="text-align: center;">{{livro.cliente.username}}</td>
+      <td style="text-align: center;">{{livro.livro.titulo}}</td>
+      <td style="text-align: center;">{{livro.livro.autor}}</td>
+      <td style="text-align: center;">{{livro.livro.genero.all|join:", "}}</td>
+      <td style="text-align: center;">{{livro.livro.ano}}</td>
+    </tr>
+  </td>
   {% endfor %}
-</ul>
+  {% endif %}
+</table>
 
-{% else %}
-  <p>Não há livros emprestados.</p>
-{% endif %}  
 {% endblock %}
