@@ -12,6 +12,9 @@ class InstanciaLivroInline(admin.TabularInline):
     model = InstanciaLivro
     extra = 0
 
+class PedidoInline(admin.TabularInline):
+    model = Pedido
+
 @admin.register(Livro)
 class LivroAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'autor', 'get_genero', 'linguagem', 'edicao', 'quantidade', 'ano')
@@ -38,6 +41,11 @@ class InstanciaLivroAdmin(admin.ModelAdmin):
         }),
     )
 
+@admin.register(Pedido)
+class PedidoAdmin(admin.ModelAdmin):
+    list_display = ('dataPedido', 'valor', 'pago')
+    list_filter = ('dataPedido', 'pago')
+    
+
 admin.site.register(Genero)
-admin.site.register(Pedido)
 admin.site.register(OrdemDeEntrega)

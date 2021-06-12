@@ -16,7 +16,7 @@
   {% for livro in livros %}
   <td>
     <tr>
-      <td style="text-align: center;"><a href="{{ livros.get_absolute_url }}">{{livro.livro.titulo}}</a></td>
+      <td style="text-align: center;"><a href="{{ livro.get_absolute_url }}">{{livro.livro.titulo}}</a></td>
       <td style="text-align: center;">{{livro.livro.autor}}</td>
       <td style="text-align: center;">{{livro.livro.genero.all|join:", "}}</td>
       <td style="text-align: center;">{{livro.livro.ano}}</td>

@@ -96,7 +96,8 @@ class InstanciaLivro(models.Model):
   )
 
   def get_queryset(self):
-        return InstanciaLivro.objects.filter(cliente=self.request.username).filter(status__exact='e').order_by('devolucao')
+        return InstanciaLivro.objects.filter(cliente=self.request.username
+        ).filter(status__exact='e').order_by('devolucao')
   
   class Meta:
         ordering = ['devolucao']
@@ -115,13 +116,15 @@ class Pedido(models.Model):
   livro = models.ForeignKey(Livro, null= True, on_delete = models.CASCADE)
 
   #data do pedido
-  dataPedido = models.DateTimeField(auto_now_add=True, blank=True)
+  dataPedido = models.DateField(auto_now_add=True, blank=True)
 
   #valor do pedido
-  valor = models.CharField(max_length=100)
+  valor = models.DecimalField(max_digits=5, decimal_places=2)
+
+  pago = models.BooleanField(default=False)
 
   def __str__(self):
-    return self.id
+    return str(self.id)
 
 #salva informações sobre a entrega do pedido
 class OrdemDeEntrega(models.Model):
@@ -133,4 +136,5 @@ class OrdemDeEntrega(models.Model):
   # return pedido.dataPedido + datetime.timedelta(days=1)
 
   def __str__(self):
-    return self.id
+    return str(self.id)
+

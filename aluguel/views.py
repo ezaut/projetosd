@@ -60,7 +60,7 @@ def autorDelete(request):
   pass
 
 def autorDetalhe(request):
-  autores = Autor.objects.all()
+  autores = Autor.objects.filter(Autor.pk)
   return render(request, 'autor_detalhe.html', {'autores': autores})
 
 def livroList(request):
